@@ -15,28 +15,32 @@ export const KanbanStyles = makeStyles((theme) => ({
         border: '1px solid #EB2F96',
         borderRadius: '4px',
         padding: '12px',
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 10
     },
     backgroundKanban2: {
         backgroundColor: '#FCFAFD',
         border: '1px solid #7B61FF',
         borderRadius: '4px',
         padding: '12px',
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 10
     },
     backgroundKanban3: {
         backgroundColor: '#F7FAFF',
         border: '1px solid #2F54EB',
         borderRadius: '4px',
         padding: '12px',
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 10
     },
     backgroundKanban4: {
         backgroundColor: '#F8FEF1',
         border: '1px solid #52C41A',
         borderRadius: '4px',
         padding: '12px',
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 10
     },
     titleKanban1: {
         background: '#FFF0F6',

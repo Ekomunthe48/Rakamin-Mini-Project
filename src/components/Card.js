@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -14,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {cardStyles} from '../utils/StyleUI'
 import { Grid } from '@material-ui/core';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasks } from '../store/actions/tasksActions'
 
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
@@ -30,9 +32,20 @@ const BorderLinearProgress = withStyles((theme) => ({
     },
 }))(LinearProgress);
 
-const CardKanban = () => {
+const CardKanban = ({idKanban}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [taskList, setTaskList] = useState([])
+  const { taskLists } = useSelector((state) => state.task)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchTasks(idKanban))
+  }, [idKanban])
+
+  useEffect(() => {
+      setTaskList(taskLists)
+  }, [taskLists])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,40 +56,55 @@ const CardKanban = () => {
   };
 
   const classes = cardStyles();
-    return (
-      <>
-        <Card className={classes.cardComp}>
-            <CardContent>
-                <Typography className={classes.sizeTask} variant="h5" component="h2">
-                    Re-designed the zero-g doggie bags. No more spills!
-                </Typography>
-                <Grid >
-                  <Grid className={classes.gridStyle}>
-                    <Grid item xs={6} className={classes.gridStyle}>
-                      <BorderLinearProgress className={classes.progressBar} variant="determinate" value={50} />
-                      <Typography className={classes.percentaseTask} variant="subtitle1">50%</Typography>
+
+  console.log(taskList)
+  return (
+    <>
+    {
+      taskList?.map((task) => {
+        if (task.todo_id === idKanban) {
+          return <Card className={classes.cardComp}>
+              <CardContent>
+                  <Typography className={classes.sizeTask} variant="h5" component="h2">
+                      {task.name}
+                  </Typography>
+                  <Grid >
+                    <Grid className={classes.gridStyle}>
+                      <Grid item xs={6} className={classes.gridStyle}>
+                        <BorderLinearProgress className={classes.progressBar} variant="determinate" value={task.progress_percentage} />
+                        <Typography className={classes.percentaseTask} variant="subtitle1">{task.progress_percentage}%</Typography>
+                      </Grid>
+                      <Button className={classes.menuButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}><MoreHoriz /></Button>
                     </Grid>
-                    <Button className={classes.menuButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}><MoreHoriz /></Button>
                   </Grid>
-                </Grid>
-                <Menu
-                  id="fade-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  anchorOrigin='right'
-                  open={open}
-                  onClose={handleClose}
-                  TransitionComponent={Fade}
-                >
-                  <MenuItem onClick={handleClose}>Move Left</MenuItem>
-                  <MenuItem onClick={handleClose}>Move Right</MenuItem>
-                  <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={handleClose}>Delete</MenuItem>
-                </Menu>
+                  <Menu
+                    id="fade-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    anchorOrigin='right'
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Fade}
+                  >
+                    <MenuItem onClick={handleClose}>Move Left</MenuItem>
+                    <MenuItem onClick={handleClose}>Move Right</MenuItem>
+                    <MenuItem onClick={handleClose}>Edit</MenuItem>
+                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  </Menu>
+              </CardContent>
+          </Card>
+        }  
+        return <Card className={classes.cardComp}>
+            <CardContent>
+            <Typography className={classes.sizeTask} variant="h5" component="h2">
+                No Tasks Available !
+            </Typography>
             </CardContent>
         </Card>
-      </>
-    );
+      })
+    }
+    </>
+  );
 };
 
 export default CardKanban;

@@ -15,7 +15,6 @@ const Dashboard = () => {
         dispatch(fetchTodos())
     }, [])
 
-    console.log(kanbanList)
     return (
         <Container className={classes.root}>
             <Typography className={classes.titleApp} variant='h6'>
@@ -24,8 +23,8 @@ const Dashboard = () => {
             <Grid container>
                 {
                     kanbanList?.map((kanbanCardList, idx) => {
-                        return <Grid item xs={12} md={3}>
-                            <KanbanList key={kanbanCardList.id} kanbanCardList={kanbanCardList} indexKanban={idx} />
+                        return <Grid item xs={12} md={3} key={kanbanCardList.id}>
+                            <KanbanList kanbanCardList={kanbanCardList} idKanban={kanbanCardList.id} indexKanban={idx} />
                         </Grid>
                     })
                 }

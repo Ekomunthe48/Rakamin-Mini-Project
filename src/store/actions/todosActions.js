@@ -10,7 +10,6 @@ export const fetchTodos = () => {
                     }),
             })
             const item = await response.json()
-
             dispatch({
                 type: 'FETCH_LIST_KANBAN',
                 payload: item

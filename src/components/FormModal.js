@@ -31,6 +31,7 @@ const FormModal = ({idKanban, idTask, open, handleClose, nameTask, progress_perc
           progress_percentage,
           todo_id: idKanban
         }
+        console.log(payload)
         handleClose(idKanban, idTask, payload)
     }
     return (

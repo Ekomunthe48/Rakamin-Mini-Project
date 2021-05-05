@@ -10,14 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-const KanbanList = ({kanbanCardList, kanbanList, indexKanban}) => {
+const KanbanList = ({kanbanCardList, kanbanList, kanbanId, indexKanban}) => {
     const classes = KanbanStyles();
     const cardClasses = cardStyles();
     const { taskLists } = useSelector((state) => state.task)
     const [open, setOpen] = useState(false);
-    console.log(kanbanList)
+
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         dispatch(fetchTasks(kanbanCardList.id))
     }, [kanbanCardList])
@@ -26,12 +26,11 @@ const KanbanList = ({kanbanCardList, kanbanList, indexKanban}) => {
       setOpen(true);
     };
   
-    const handleClose = (id, payload) => {
+    const handleClose = (id, idTask, payload) => {
+        console.log(payload)
       dispatch(createTask(id, payload))
       setOpen(false);
     };
-
-    console.log(taskLists)
     
     return (
         <Grid item xs={12} md={3}>
@@ -60,27 +59,26 @@ const KanbanList = ({kanbanCardList, kanbanList, indexKanban}) => {
 
             {
                 taskLists?.map((task, idx) => {
-                    // task?.map((kanban) => {
-                        if (taskLists.length !== 0) {
-                            return <Grid item xs={12} key={task?.id}>
-                                <CardKanban 
-                                    id={task?.id}
-                                    todo_id={task?.todo_id}
-                                    name={task?.name}
-                                    progress_percentage={task?.progress_percentage}
-                                />
-                            </Grid> 
-                        } else {
-                            return <Grid item xs={12}>
-                                <Card className={cardClasses.cardComp}>
-                                    <CardContent>
-                                        <Typography className={cardClasses.sizeTask} variant="h5" component="h2">
-                                            No Task Available !
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>     
-                        }
+                    if (taskLists.length !== 0) {
+                        return <Grid item xs={12} key={task?.id}>
+                            <CardKanban 
+                                id={task?.id}
+                                todo_id={task?.todo_id}
+                                name={task?.name}
+                                progress_percentage={task?.progress_percentage}
+                            />
+                        </Grid> 
+                    } else {
+                        return <Grid item xs={12}>
+                            <Card className={cardClasses.cardComp}>
+                                <CardContent>
+                                    <Typography className={cardClasses.sizeTask} variant="h5" component="h2">
+                                        No Task Available !
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>     
+                    }
                 })
             }
 

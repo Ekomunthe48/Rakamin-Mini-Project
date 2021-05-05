@@ -50,6 +50,26 @@ const CardKanban = ({id, todo_id, name, progress_percentage}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  
+  const handleCloseLeft = (id, todo_id, name, progress_percentage) => {
+    let payload = {
+        name,
+        progress_percentage,
+        todo_id
+      }
+    dispatch(updateTask(todo_id, id, payload))
+    setAnchorEl(null);
+  };
+
+  const handleCloseRight = (id, todo_id, name, progress_percentage) => {
+    let payload = {
+        name,
+        progress_percentage,
+        todo_id
+      }
+    dispatch(updateTask(todo_id, id, payload))
+    setAnchorEl(null);
+  };
 
   const handleClickOpenDelete = () => {
     setOpenModalDelete(true);
@@ -99,8 +119,8 @@ const CardKanban = ({id, todo_id, name, progress_percentage}) => {
                     onClose={handleClose}
                     TransitionComponent={Fade}
                   >
-                    <MenuItem onClick={handleClose}>Move Left</MenuItem>
-                    <MenuItem onClick={handleClose}>Move Right</MenuItem>
+                    <MenuItem onClick={handleCloseLeft}>Move Left</MenuItem>
+                    <MenuItem onClick={handleCloseRight}>Move Right</MenuItem>
                     <MenuItem onClick={handleClickOpenModal}>Edit</MenuItem>
                     <MenuItem onClick={handleClickOpenDelete}>Delete</MenuItem>
                     

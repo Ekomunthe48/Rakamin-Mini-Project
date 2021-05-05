@@ -23,9 +23,7 @@ const Dashboard = () => {
             </Typography>
             <Grid container>
                 {
-                    kanbanList?.map((kanbanCardList, idx) => {
-                        const taskListThatBelongsToThisGroup = []
-                        
+                    kanbanList?.map((kanbanCardList, idx) => {            
                         return <KanbanList key={kanbanCardList.id} kanbanList={kanbanList} kanbanCardList={kanbanCardList} indexKanban={idx} />
                     })
                 }

@@ -9,6 +9,7 @@ import { fetchTodos } from '../store/actions/todosActions'
 const Dashboard = () => {
     const classes = homeStyles();
     const { kanbanList } = useSelector((state) => state.kanban)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -23,9 +24,9 @@ const Dashboard = () => {
             <Grid container>
                 {
                     kanbanList?.map((kanbanCardList, idx) => {
-                        return <Grid item xs={12} md={3} key={kanbanCardList.id}>
-                            <KanbanList kanbanCardList={kanbanCardList} idKanban={kanbanCardList.id} indexKanban={idx} />
-                        </Grid>
+                        const taskListThatBelongsToThisGroup = []
+                        
+                        return <KanbanList key={kanbanCardList.id} kanbanList={kanbanList} kanbanCardList={kanbanCardList} indexKanban={idx} />
                     })
                 }
             </Grid>

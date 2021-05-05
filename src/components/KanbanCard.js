@@ -1,41 +1,40 @@
-import { Container, Grid, Typography } from '@material-ui/core';
-import React, {useEffect, useState} from 'react';
-import { KanbanStyles, cardStyles } from '../utils/StyleUI';
+import { Grid, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { cardStyles, KanbanStyles } from '../utils/StyleUI';
 import CardKanban from './Card';
 import Button from '@material-ui/core/Button';
 import ControlPoint from '@material-ui/icons/ControlPoint';
+import FormModal from './FormModal';
+import { fetchTasks, createTask } from '../store/actions/tasksActions'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasks } from '../store/actions/tasksActions'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import FormModal from './FormModal';
 
-const KanbanList = ({kanbanCardList, indexKanban, idKanban}) => {
+const KanbanList = ({kanbanCardList, kanbanList, indexKanban}) => {
     const classes = KanbanStyles();
-    // const cardClasses = cardStyles()
-    // const [taskList, setTaskList] = useState([])
-    // const { taskLists } = useSelector((state) => state.task)
-    // const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(fetchTasks(kanbanCardList?.id))
-    // }, [kanbanCardList?.id])
-
-    // useEffect(() => {
-    //     setTaskList(taskLists)
-    // }, [taskLists])
-
-    const [open, setOpen] = React.useState(false);
-
+    const cardClasses = cardStyles();
+    const { taskLists } = useSelector((state) => state.task)
+    const [open, setOpen] = useState(false);
+    console.log(kanbanList)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(fetchTasks(kanbanCardList.id))
+    }, [kanbanCardList])
+    
     const handleClickOpen = () => {
       setOpen(true);
     };
   
-    const handleClose = () => {
+    const handleClose = (id, payload) => {
+      dispatch(createTask(id, payload))
       setOpen(false);
     };
 
+    console.log(taskLists)
+    
     return (
+        <Grid item xs={12} md={3}>
         <div
             className={
                 (indexKanban % 3 === 0 && indexKanban !== 0) ? classes.backgroundKanban4
@@ -59,29 +58,39 @@ const KanbanList = ({kanbanCardList, indexKanban, idKanban}) => {
                 {kanbanCardList.description}
             </Typography>
 
-            <Grid item xs={12}>
-                <CardKanban idKanban={idKanban}/>
-                {/* {
-                    taskList?.map((task) => {
-                        if (task.todo_id === idKanban) {
-                            return  */}
-                        {/* } else {
-                            return <Card className={cardClasses.cardComp}>
-                                <CardContent>
-                                <Typography className={cardClasses.sizeTask} variant="h5" component="h2">
-                                    No Tasks Available !
-                                </Typography>
-                                </CardContent>
-                            </Card>
-                        }  
-                    })
-                } */}
-            </Grid>
+            {
+                taskLists?.map((task, idx) => {
+                    // task?.map((kanban) => {
+                        if (taskLists.length !== 0) {
+                            return <Grid item xs={12} key={task?.id}>
+                                <CardKanban 
+                                    id={task?.id}
+                                    todo_id={task?.todo_id}
+                                    name={task?.name}
+                                    progress_percentage={task?.progress_percentage}
+                                />
+                            </Grid> 
+                        } else {
+                            return <Grid item xs={12}>
+                                <Card className={cardClasses.cardComp}>
+                                    <CardContent>
+                                        <Typography className={cardClasses.sizeTask} variant="h5" component="h2">
+                                            No Task Available !
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>     
+                        }
+                })
+            }
+
             <Button onClick={handleClickOpen}>
                 <ControlPoint /> &nbsp; New Task
             </Button>
-            <FormModal open={open} handleClose={handleClose}/>
+
+            <FormModal idKanban={kanbanCardList.id} open={open} handleClose={handleClose}/>
         </div>
+        </Grid>
     );
 };
 

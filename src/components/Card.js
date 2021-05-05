@@ -14,8 +14,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {cardStyles} from '../utils/StyleUI'
 import { Grid } from '@material-ui/core';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
+import DeleteModal from './DeleteModal';
+import { deleteTask, updateTask } from '../store/actions/tasksActions'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasks } from '../store/actions/tasksActions'
+import FormModal from './FormModal';
 
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
@@ -32,20 +34,14 @@ const BorderLinearProgress = withStyles((theme) => ({
     },
 }))(LinearProgress);
 
-const CardKanban = ({idKanban}) => {
+const CardKanban = ({id, todo_id, name, progress_percentage}) => {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [taskList, setTaskList] = useState([])
-  const { taskLists } = useSelector((state) => state.task)
-  const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  useEffect(() => {
-      dispatch(fetchTasks(idKanban))
-  }, [idKanban])
-
-  useEffect(() => {
-      setTaskList(taskLists)
-  }, [taskLists])
+  const dispatch = useDispatch()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,24 +51,41 @@ const CardKanban = ({idKanban}) => {
     setAnchorEl(null);
   };
 
+  const handleClickOpenDelete = () => {
+    setOpenModalDelete(true);
+    setAnchorEl(null);
+  };
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+    setAnchorEl(null);
+  };
+
+  const handleDelete = (idKanban, idTask) => {
+    console.log(idKanban, idTask)
+    dispatch(deleteTask(idKanban, idTask))
+    setOpenModalDelete(false)
+  }
+
+  const handleCloseModal = (idKanban, idTask, payload) => {
+    dispatch(updateTask(idKanban, idTask, payload))
+    setOpenModal(false);
+  };
+
   const classes = cardStyles();
 
-  console.log(taskList)
   return (
     <>
-    {
-      taskList?.map((task) => {
-        if (task.todo_id === idKanban) {
-          return <Card className={classes.cardComp}>
+      <Card className={classes.cardComp}>
               <CardContent>
                   <Typography className={classes.sizeTask} variant="h5" component="h2">
-                      {task.name}
+                      {name}
                   </Typography>
                   <Grid >
                     <Grid className={classes.gridStyle}>
                       <Grid item xs={6} className={classes.gridStyle}>
-                        <BorderLinearProgress className={classes.progressBar} variant="determinate" value={task.progress_percentage} />
-                        <Typography className={classes.percentaseTask} variant="subtitle1">{task.progress_percentage}%</Typography>
+                        <BorderLinearProgress className={classes.progressBar} variant="determinate" value={progress_percentage} />
+                        <Typography className={classes.percentaseTask} variant="subtitle1">{progress_percentage}%</Typography>
                       </Grid>
                       <Button className={classes.menuButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}><MoreHoriz /></Button>
                     </Grid>
@@ -81,28 +94,22 @@ const CardKanban = ({idKanban}) => {
                     id="fade-menu"
                     anchorEl={anchorEl}
                     keepMounted
-                    anchorOrigin='right'
+                    anchorOrigin='vertical'
                     open={open}
                     onClose={handleClose}
                     TransitionComponent={Fade}
                   >
                     <MenuItem onClick={handleClose}>Move Left</MenuItem>
                     <MenuItem onClick={handleClose}>Move Right</MenuItem>
-                    <MenuItem onClick={handleClose}>Edit</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                    <MenuItem onClick={handleClickOpenModal}>Edit</MenuItem>
+                    <MenuItem onClick={handleClickOpenDelete}>Delete</MenuItem>
+                    
+                    <DeleteModal handleDelete={handleDelete} open={openModalDelete} idKanban={todo_id} idTask={id}/>
+                    <FormModal idKanban={todo_id} idTask={id} nameTask={name} progress_percentage_task={progress_percentage} open={openModal} handleClose={handleCloseModal}/>
                   </Menu>
+
               </CardContent>
           </Card>
-        }  
-        return <Card className={classes.cardComp}>
-            <CardContent>
-            <Typography className={classes.sizeTask} variant="h5" component="h2">
-                No Tasks Available !
-            </Typography>
-            </CardContent>
-        </Card>
-      })
-    }
     </>
   );
 };

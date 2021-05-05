@@ -7,6 +7,7 @@ const taskReducers =  (state = initialState, action) => {
         case 'FETCH_TASKS':
             return {
                 ...state,
+                // taskLists: [...state.taskLists, action.payload]
                 taskLists: action.payload
             }
         default:

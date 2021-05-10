@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {DeleteButton} from '../utils/StyleUI'
 
 const DeleteModal = ({idKanban, idTask, open, handleDelete}) => {
 
@@ -28,9 +29,9 @@ const DeleteModal = ({idKanban, idTask, open, handleDelete}) => {
             <Button onClick={handleDelete}>
               Cancel
             </Button>
-            <Button onClick={handleForm} color="primary">
+            <DeleteButton onClick={handleForm} color="primary">
               Delete
-            </Button>
+            </DeleteButton>
           </DialogActions>
         </Dialog>
       </div>

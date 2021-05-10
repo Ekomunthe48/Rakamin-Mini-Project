@@ -5,6 +5,7 @@ import KanbanList from '../components/KanbanCard';
 import { homeStyles } from '../utils/StyleUI';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos } from '../store/actions/todosActions'
+import Navbar from '../components/Navbar';
 
 const Dashboard = () => {
     const classes = homeStyles();
@@ -18,16 +19,16 @@ const Dashboard = () => {
 
     return (
         <Container className={classes.root}>
-            <Typography className={classes.titleApp} variant='h6'>
-                Product Roadmap
-            </Typography>
-            <Grid container>
-                {
-                    kanbanList?.map((kanbanCardList, idx) => {            
-                        return <KanbanList key={kanbanCardList.id} kanbanList={kanbanList} kanbanCardList={kanbanCardList} indexKanban={idx} />
-                    })
-                }
-            </Grid>
+                <Typography className={classes.titleApp} variant='h6'>
+                    Product Roadmap
+                </Typography>
+                <Grid container spacing={2}>
+                    {
+                        kanbanList?.map((kanbanCardList, idx) => {            
+                            return <KanbanList key={kanbanCardList.id} kanbanList={kanbanList} kanbanCardList={kanbanCardList} indexKanban={idx} />
+                        })
+                    }
+                </Grid>
         </Container>
     );
 };

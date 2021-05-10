@@ -5,7 +5,7 @@ export const fetchTasks = (id) => {
             const response =  await fetch(url, {
                     method: 'get',
                     headers: new Headers({
-                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwNDgxMTU2fQ.Nxr2GH0AKfDVA-3774LnCn-6UvgjOKru52vcDjjZNqw',
+                        'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwOTYzMDI0fQ.c5jE4x32OdX_8c64QAcZBq8PF069WNhzQn25AMsX_mo',
                     }),
             })
             const item = await response.json()
@@ -27,7 +27,7 @@ export const createTask = (id, data) => {
             const response =  await fetch(url, {
                     method: 'post',
                     headers: new Headers({
-                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwNDgxMTU2fQ.Nxr2GH0AKfDVA-3774LnCn-6UvgjOKru52vcDjjZNqw',
+                        'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwOTYzMDI0fQ.c5jE4x32OdX_8c64QAcZBq8PF069WNhzQn25AMsX_mo',
                       'Content-Type': 'application/json; charset=UTF-8'
                     }),
                     body: JSON.stringify({
@@ -51,7 +51,7 @@ export const updateTask = (idKanban, idTask, data) => {
             const response =  await fetch(url, {
                     method: 'PATCH',
                     headers: {
-                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwNDgxMTU2fQ.Nxr2GH0AKfDVA-3774LnCn-6UvgjOKru52vcDjjZNqw',
+                        'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwOTYzMDI0fQ.c5jE4x32OdX_8c64QAcZBq8PF069WNhzQn25AMsX_mo',
                       'Content-Type': 'application/json; charset=UTF-8',
                     },
                     body: JSON.stringify({
@@ -76,7 +76,7 @@ export const deleteTask = (idKanban, idTask) => {
             const response =  await fetch(url, {
                     method: 'delete',
                     headers: new Headers({
-                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwNDgxMTU2fQ.Nxr2GH0AKfDVA-3774LnCn-6UvgjOKru52vcDjjZNqw',
+                        'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwOTYzMDI0fQ.c5jE4x32OdX_8c64QAcZBq8PF069WNhzQn25AMsX_mo',
                       'Content-Type': 'application/json; charset=UTF-8'
                     })
             })

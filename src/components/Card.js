@@ -13,7 +13,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {cardStyles} from '../utils/StyleUI'
 import { Grid } from '@material-ui/core';
-import MoreHoriz from '@material-ui/icons/MoreHoriz';
+import {MoreHoriz, ArrowForward, ArrowBack, Edit, Delete} from '@material-ui/icons/';
 import DeleteModal from './DeleteModal';
 import { deleteTask, updateTask } from '../store/actions/tasksActions'
 import { useDispatch, useSelector } from 'react-redux';
@@ -119,10 +119,10 @@ const CardKanban = ({id, todo_id, name, progress_percentage}) => {
                     onClose={handleClose}
                     TransitionComponent={Fade}
                   >
-                    <MenuItem onClick={handleCloseLeft}>Move Left</MenuItem>
-                    <MenuItem onClick={handleCloseRight}>Move Right</MenuItem>
-                    <MenuItem onClick={handleClickOpenModal}>Edit</MenuItem>
-                    <MenuItem onClick={handleClickOpenDelete}>Delete</MenuItem>
+                    <MenuItem onClick={handleCloseLeft}><ArrowBack /> Move Left</MenuItem>
+                    <MenuItem onClick={handleCloseRight}><ArrowForward /> Move Right</MenuItem>
+                    <MenuItem onClick={handleClickOpenModal}><Edit /> Edit</MenuItem>
+                    <MenuItem onClick={handleClickOpenDelete}><Delete /> Delete</MenuItem>
                     
                     <DeleteModal handleDelete={handleDelete} open={openModalDelete} idKanban={todo_id} idTask={id}/>
                     <FormModal idKanban={todo_id} idTask={id} nameTask={name} progress_percentage_task={progress_percentage} open={openModal} handleClose={handleCloseModal}/>

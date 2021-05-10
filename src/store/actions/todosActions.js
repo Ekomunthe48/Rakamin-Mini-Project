@@ -5,7 +5,7 @@ export const fetchTodos = () => {
             const response =  await fetch(url, {
                     method: 'get',
                     headers: new Headers({
-                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwNDgxMTU2fQ.Nxr2GH0AKfDVA-3774LnCn-6UvgjOKru52vcDjjZNqw',
+                      'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNywiZXhwIjoxNjIwOTYzMDI0fQ.c5jE4x32OdX_8c64QAcZBq8PF069WNhzQn25AMsX_mo',
                     }),
             })
             const item = await response.json()

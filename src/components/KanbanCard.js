@@ -53,7 +53,7 @@ const KanbanList = ({kanbanCardList, kanbanList, kanbanId, indexKanban}) => {
                 {kanbanCardList.title}
             </Typography>
 
-            <Typography variant="subtitle2" gutterBottom>
+            <Typography className={classes.descriptionKanban} variant="subtitle2" gutterBottom>
                 {kanbanCardList.description}
             </Typography>
 

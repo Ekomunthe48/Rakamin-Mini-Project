@@ -1,8 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 export const homeStyles = makeStyles((theme) => ({
     root: {
-      marginTop: 20
+      marginTop: 20,
+      marginLeft: 100
     },
     titleApp: {
         margin: '10px 0'
@@ -77,6 +79,9 @@ export const KanbanStyles = makeStyles((theme) => ({
         width: '86px',
         fontSize: '12px',
         color: '#52C41A;',
+    },
+    descriptionKanban: {
+        margin: "4px 0"
     }
 }));
 
@@ -108,3 +113,23 @@ export const cardStyles = makeStyles((theme) => ({
         marginLeft: 'auto',
     }
 }));
+
+export const SaveButton = withStyles((theme) => ({
+    root: {
+      color: "#FFFFFF",
+      backgroundColor: "#52C41A",
+      '&:hover': {
+        backgroundColor: "#009200",
+      },
+    },
+  }))(Button);
+
+  export const DeleteButton = withStyles((theme) => ({
+    root: {
+      color: "#FFFFFF",
+      backgroundColor: "#EB5757",
+      '&:hover': {
+        backgroundColor: "#b3202e",
+      },
+    },
+  }))(Button);

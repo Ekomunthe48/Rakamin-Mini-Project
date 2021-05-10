@@ -6,6 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { InputLabel } from '@material-ui/core';
+import {SaveButton} from '../utils/StyleUI'
 
 const FormModal = ({idKanban, idTask, open, handleClose, nameTask, progress_percentage_task}) => {
     const [name, setName] = useState()
@@ -39,22 +41,30 @@ const FormModal = ({idKanban, idTask, open, handleClose, nameTask, progress_perc
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Create Task</DialogTitle>
           <DialogContent>
+            <InputLabel>
+              Task Name
+            </InputLabel>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Task Name"
+              placeholder="example: Build rocket to Mars"
               type="text"
               fullWidth
+              variant="outlined"
               value={name}
               onChange={handleName}
             />
+            <InputLabel style={{marginTop: "10px"}}>
+              Progress
+            </InputLabel>
             <TextField
               autoFocus
               margin="dense"
               id="progress"
-              label="Progress"
+              placeholder="Progress"
               type="text"
+              variant="outlined"
               value={progress_percentage}
               onChange={handleProgress}
             />
@@ -63,9 +73,9 @@ const FormModal = ({idKanban, idTask, open, handleClose, nameTask, progress_perc
             <Button onClick={handleClose}>
               Cancel
             </Button>
-            <Button onClick={handleForm} color="primary">
+            <SaveButton onClick={handleForm} color="primary">
               Save Task
-            </Button>
+            </SaveButton>
           </DialogActions>
         </Dialog>
       </div>
